@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-from functools import partial
-
 from cfspeedtest import CloudflareSpeedtest
 
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.start import async_at_started
 
-from .coordinator import CloudflareSpeedTestConfigEntry, CloudflareSpeedTestDataCoordinator
+from .coordinator import (
+    CloudflareSpeedTestConfigEntry,
+    CloudflareSpeedTestDataCoordinator,
+)
 
 PLATFORMS = [Platform.SENSOR]
 

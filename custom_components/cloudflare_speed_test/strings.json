@@ -2,7 +2,7 @@
   "entity": {
     "sensor": {
       "ip": {
-        "ip": "IP Address",
+        "name": "IP address",
         "state_attributes": {
           "server_city": {
             "name": "Server city"
@@ -57,7 +57,7 @@
           }
         }
       },
-      "100kB_down": {
+      "100kb_down": {
         "name": "100kB down",
         "state_attributes": {
           "server_city": {
@@ -71,7 +71,7 @@
           }
         }
       },
-      "100kB_up": {
+      "100kb_up": {
         "name": "100kB up",
         "state_attributes": {
           "server_city": {
@@ -85,7 +85,7 @@
           }
         }
       },
-      "1MB_down": {
+      "1mb_down": {
         "name": "1MB down",
         "state_attributes": {
           "server_city": {
@@ -99,7 +99,7 @@
           }
         }
       },
-      "1MB_up": {
+      "1mb_up": {
         "name": "1MB up",
         "state_attributes": {
           "server_city": {
@@ -113,7 +113,7 @@
           }
         }
       },
-      "10MB_down": {
+      "10mb_down": {
         "name": "10MB down",
         "state_attributes": {
           "server_city": {
@@ -127,7 +127,7 @@
           }
         }
       },
-      "10MB_up": {
+      "10mb_up": {
         "name": "10MB up",
         "state_attributes": {
           "server_city": {
@@ -141,7 +141,7 @@
           }
         }
       },
-      "25MB_down": {
+      "25mb_down": {
         "name": "25MB down",
         "state_attributes": {
           "server_city": {
@@ -156,7 +156,7 @@
         }
       },
       "90th_percentile_down": {
-        "name": "90th Percentile Down",
+        "name": "90th percentile down",
         "state_attributes": {
           "server_city": {
             "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
@@ -170,7 +170,7 @@
         }
       },
       "90th_percentile_up": {
-        "name": "90th Percentile Up",
+        "name": "90th percentile up",
         "state_attributes": {
           "server_city": {
             "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"

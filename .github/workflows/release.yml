@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4
+
+      - name: 🔢 Adjust version number
+        shell: bash
+        run: |
+          version="${{ github.event.release.tag_name }}"
+          version="${version,,}"
+          version="${version#v}"
+          yq e -P -o=json \
+            -i ".version = \"${version}\"" \
+            "${{ github.workspace }}/custom_components/cloudflare_speed_test/manifest.json"
+
+      - name: 📦 Created zipped release package
+        run: |
+          cd "${{ github.workspace }}/custom_components/cloudflare_speed_test"
+          zip cloudflare_speed_test.zip -r ./
+
+      - name: ⬆️ Upload zip to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GHCR_TOKEN }}
+          file: "${{ github.workspace }}/custom_components/cloudflare_speed_test/cloudflare_speed_test.zip"
+          asset_name: cloudflare_speed_test.zip
+          tag: ${{ github.ref }}
+          overwrite: true

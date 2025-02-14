@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Final
 
+
 DOMAIN: Final = "cloudflare_speed_test"
 
 ATTR_SERVER_REGION: Final = "server_region"

@@ -27,7 +27,11 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from .coordinator import CloudflareSpeedTestConfigEntry, CloudflareSpeedTestDataCoordinator
+from .coordinator import (
+    CloudflareSpeedTestConfigEntry,
+    CloudflareSpeedTestDataCoordinator,
+)
+
 
 @dataclass(frozen=True)
 class CloudflareSpeedTestSensorEntityDescription(SensorEntityDescription):
@@ -40,7 +44,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     CloudflareSpeedTestSensorEntityDescription(
         key="ip",
         translation_key="ip",
-        name="IP Address",
+        name="IP address",
         value=lambda value: value,
     ),
     CloudflareSpeedTestSensorEntityDescription(
@@ -67,7 +71,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="100kB_down_bps",
-        translation_key="100kB_down",
+        translation_key="100kb_down",
         name="100kB down",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -76,7 +80,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="100kB_up_bps",
-        translation_key="100kB_up",
+        translation_key="100kb_up",
         name="100kB up",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -85,7 +89,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="1MB_down_bps",
-        translation_key="1MB_down",
+        translation_key="1mb_down",
         name="1MB down",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -94,7 +98,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="1MB_up_bps",
-        translation_key="1MB_up",
+        translation_key="1mb_up",
         name="1MB up",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -103,7 +107,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="10MB_down_bps",
-        translation_key="10MB_down",
+        translation_key="10mb_down",
         name="10MB down",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -112,7 +116,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="10MB_up_bps",
-        translation_key="10MB_up",
+        translation_key="10mb_up",
         name="10MB up",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -121,7 +125,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="25MB_down_bps",
-        translation_key="25MB_down",
+        translation_key="25mb_down",
         name="25MB down",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
@@ -162,7 +166,9 @@ async def async_setup_entry(
     )
 
 
-class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordinator], SensorEntity):
+class CloudflareSpeedTestSensor(
+    CoordinatorEntity[CloudflareSpeedTestDataCoordinator], SensorEntity
+):
     """Implementation of a Cloudflare Speed Test sensor."""
 
     entity_description: CloudflareSpeedTestSensorEntityDescription
@@ -201,9 +207,15 @@ class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordin
         if self.coordinator.data:
             self._attrs.update(
                 {
-                    ATTR_SERVER_CITY: self.coordinator.data["meta"]["location_city"].value,
-                    ATTR_SERVER_REGION: self.coordinator.data["meta"]["location_region"].value,
-                    ATTR_SERVER_CODE: self.coordinator.data["meta"]["location_code"].value,
+                    ATTR_SERVER_CITY: self.coordinator.data["meta"][
+                        "location_city"
+                    ].value,
+                    ATTR_SERVER_REGION: self.coordinator.data["meta"][
+                        "location_region"
+                    ].value,
+                    ATTR_SERVER_CODE: self.coordinator.data["meta"][
+                        "location_code"
+                    ].value,
                 }
             )
 
