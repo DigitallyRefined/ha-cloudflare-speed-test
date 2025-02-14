@@ -104,7 +104,6 @@ class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordin
             identifiers={(DOMAIN, self.coordinator.config_entry.entry_id)},
             name=DEFAULT_NAME,
             entry_type=DeviceEntryType.SERVICE,
-            configuration_url="https://speed.cloudflare.com/",
         )
 
     @property
