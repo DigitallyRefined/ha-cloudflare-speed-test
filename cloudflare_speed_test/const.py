@@ -1,10 +1,10 @@
-"""Constants used by Speedtest.net."""
+"""Constants used by Cloudflare Speed Test."""
 
 from __future__ import annotations
 
 from typing import Final
 
-DOMAIN: Final = "speedtestdotnet"
+DOMAIN: Final = "cloudflare_speed_test"
 
 CONF_SERVER_NAME: Final = "server_name"
 CONF_SERVER_ID: Final = "server_id"
@@ -16,8 +16,8 @@ ATTR_SERVER_ID: Final = "server_id"
 ATTR_SERVER_NAME: Final = "server_name"
 
 
-DEFAULT_NAME: Final = "SpeedTest"
+DEFAULT_NAME: Final = "Cloudflare Speed Test"
 DEFAULT_SCAN_INTERVAL: Final = 60
 DEFAULT_SERVER: Final = "*Auto Detect"
 
-ATTRIBUTION: Final = "Data retrieved from Speedtest.net by Ookla"
+ATTRIBUTION: Final = "Data retrieved from Cloudflare Speed Test"

@@ -1,4 +1,4 @@
-"""Support for Speedtest.net internet speed testing sensor."""
+"""Support for Cloudflare Speed Test internet speed testing sensor."""
 
 from __future__ import annotations
 
@@ -29,35 +29,38 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from .coordinator import SpeedTestConfigEntry, SpeedTestDataCoordinator
+from .coordinator import CloudflareSpeedTestConfigEntry, CloudflareSpeedTestDataCoordinator
 
 
 @dataclass(frozen=True)
-class SpeedtestSensorEntityDescription(SensorEntityDescription):
-    """Class describing Speedtest sensor entities."""
+class CloudflareSpeedTestSensorEntityDescription(SensorEntityDescription):
+    """Class describing CloudflareSpeedTest sensor entities."""
 
     value: Callable = round
 
 
-SENSOR_TYPES: tuple[SpeedtestSensorEntityDescription, ...] = (
-    SpeedtestSensorEntityDescription(
+SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
+    CloudflareSpeedTestSensorEntityDescription(
         key="ping",
         translation_key="ping",
+        name="Ping",
         native_unit_of_measurement=UnitOfTime.MILLISECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DURATION,
     ),
-    SpeedtestSensorEntityDescription(
+    CloudflareSpeedTestSensorEntityDescription(
         key="download",
         translation_key="download",
+        name="Download",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
     ),
-    SpeedtestSensorEntityDescription(
+    CloudflareSpeedTestSensorEntityDescription(
         key="upload",
         translation_key="upload",
+        name="Upload",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
@@ -68,28 +71,28 @@ SENSOR_TYPES: tuple[SpeedtestSensorEntityDescription, ...] = (
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: SpeedTestConfigEntry,
+    config_entry: CloudflareSpeedTestConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up the Speedtestdotnet sensors."""
-    speedtest_coordinator = config_entry.runtime_data
+    """Set up the Cloudflare_speed_test sensors."""
+    cloudflarespeedtest_coordinator = config_entry.runtime_data
     async_add_entities(
-        SpeedtestSensor(speedtest_coordinator, description)
+        CloudflareSpeedTestSensor(cloudflarespeedtest_coordinator, description)
         for description in SENSOR_TYPES
     )
 
 
-class SpeedtestSensor(CoordinatorEntity[SpeedTestDataCoordinator], SensorEntity):
-    """Implementation of a speedtest.net sensor."""
+class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordinator], SensorEntity):
+    """Implementation of a Cloudflare Speed Test sensor."""
 
-    entity_description: SpeedtestSensorEntityDescription
+    entity_description: CloudflareSpeedTestSensorEntityDescription
     _attr_attribution = ATTRIBUTION
     _attr_has_entity_name = True
 
     def __init__(
         self,
-        coordinator: SpeedTestDataCoordinator,
-        description: SpeedtestSensorEntityDescription,
+        coordinator: CloudflareSpeedTestDataCoordinator,
+        description: CloudflareSpeedTestSensorEntityDescription,
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
@@ -101,7 +104,7 @@ class SpeedtestSensor(CoordinatorEntity[SpeedTestDataCoordinator], SensorEntity)
             identifiers={(DOMAIN, self.coordinator.config_entry.entry_id)},
             name=DEFAULT_NAME,
             entry_type=DeviceEntryType.SERVICE,
-            configuration_url="https://www.speedtest.net/",
+            configuration_url="https://speed.cloudflare.com/",
         )
 
     @property

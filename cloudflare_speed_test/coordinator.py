@@ -1,10 +1,10 @@
-"""Coordinator for speedtestdotnet."""
+"""Coordinator for cloudflare_speed_test."""
 
 from datetime import timedelta
 import logging
 from typing import Any, cast
 
-import speedtest
+import speedtest as cloudflarespeedtest
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -14,19 +14,19 @@ from .const import CONF_SERVER_ID, DEFAULT_SCAN_INTERVAL, DEFAULT_SERVER, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-type SpeedTestConfigEntry = ConfigEntry[SpeedTestDataCoordinator]
+type CloudflareSpeedTestConfigEntry = ConfigEntry[CloudflareSpeedTestDataCoordinator]
 
 
-class SpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
-    """Get the latest data from speedtest.net."""
+class CloudflareSpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
+    """Get the latest data from Cloudflare Speed Test."""
 
-    config_entry: SpeedTestConfigEntry
+    config_entry: CloudflareSpeedTestConfigEntry
 
     def __init__(
         self,
         hass: HomeAssistant,
-        config_entry: SpeedTestConfigEntry,
-        api: speedtest.Speedtest,
+        config_entry: CloudflareSpeedTestConfigEntry,
+        api: cloudflarespeedtest.Speedtest,
     ) -> None:
         """Initialize the data object."""
         self.hass = hass
@@ -59,7 +59,7 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             ] = server
 
     def update_data(self) -> dict[str, Any]:
-        """Get the latest data from speedtest.net."""
+        """Get the latest data from Cloudflare Speed Test."""
         self.update_servers()
         self.api.closest.clear()
         if self.config_entry.options.get(CONF_SERVER_ID):
@@ -68,7 +68,7 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         best_server = self.api.get_best_server()
         _LOGGER.debug(
-            "Executing speedtest.net speed test with server_id: %s",
+            "Executing Cloudflare Speed Test speed test with server_id: %s",
             best_server["id"],
         )
         self.api.download()
@@ -76,10 +76,10 @@ class SpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return cast(dict[str, Any], self.api.results.dict())
 
     async def _async_update_data(self) -> dict[str, Any]:
-        """Update Speedtest data."""
+        """Update CloudflareSpeedTest data."""
         try:
             return await self.hass.async_add_executor_job(self.update_data)
-        except speedtest.NoMatchedServers as err:
+        except cloudflarespeedtest.NoMatchedServers as err:
             raise UpdateFailed("Selected server is not found.") from err
-        except speedtest.SpeedtestException as err:
+        except cloudflarespeedtest.SpeedTestException as err:
             raise UpdateFailed(err) from err

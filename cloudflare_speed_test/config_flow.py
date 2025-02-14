@@ -1,4 +1,4 @@
-"""Config flow for Speedtest.net."""
+"""Config flow for Cloudflare Speed Test."""
 
 from __future__ import annotations
 
@@ -16,21 +16,21 @@ from .const import (
     DEFAULT_SERVER,
     DOMAIN,
 )
-from .coordinator import SpeedTestConfigEntry
+from .coordinator import CloudflareSpeedTestConfigEntry
 
 
-class SpeedTestFlowHandler(ConfigFlow, domain=DOMAIN):
-    """Handle Speedtest.net config flow."""
+class CloudflareSpeedTestFlowHandler(ConfigFlow, domain=DOMAIN):
+    """Handle Cloudflare Speed Test config flow."""
 
     VERSION = 1
 
     @staticmethod
     @callback
     def async_get_options_flow(
-        config_entry: SpeedTestConfigEntry,
-    ) -> SpeedTestOptionsFlowHandler:
+        config_entry: CloudflareSpeedTestConfigEntry,
+    ) -> CloudflareSpeedTestOptionsFlowHandler:
         """Get the options flow for this handler."""
-        return SpeedTestOptionsFlowHandler()
+        return CloudflareSpeedTestOptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -45,8 +45,8 @@ class SpeedTestFlowHandler(ConfigFlow, domain=DOMAIN):
         return self.async_create_entry(title=DEFAULT_NAME, data=user_input)
 
 
-class SpeedTestOptionsFlowHandler(OptionsFlow):
-    """Handle SpeedTest options."""
+class CloudflareSpeedTestOptionsFlowHandler(OptionsFlow):
+    """Handle CloudflareSpeedTest options."""
 
     def __init__(self) -> None:
         """Initialize options flow."""

@@ -1,10 +1,10 @@
-"""Support for testing internet speed via Speedtest.net."""
+"""Support for testing internet speed via Cloudflare Speed Test."""
 
 from __future__ import annotations
 
 from functools import partial
 
-import speedtest
+import speedtest as cloudflarespeedtest
 
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import Platform
@@ -12,21 +12,21 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.start import async_at_started
 
-from .coordinator import SpeedTestConfigEntry, SpeedTestDataCoordinator
+from .coordinator import CloudflareSpeedTestConfigEntry, CloudflareSpeedTestDataCoordinator
 
 PLATFORMS = [Platform.SENSOR]
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, config_entry: SpeedTestConfigEntry
+    hass: HomeAssistant, config_entry: CloudflareSpeedTestConfigEntry
 ) -> bool:
-    """Set up the Speedtest.net component."""
+    """Set up the Cloudflare Speed Test component."""
     try:
         api = await hass.async_add_executor_job(
-            partial(speedtest.Speedtest, secure=True)
+            partial(cloudflarespeedtest.Speedtest, secure=True)
         )
-        coordinator = SpeedTestDataCoordinator(hass, config_entry, api)
-    except speedtest.SpeedtestException as err:
+        coordinator = CloudflareSpeedTestDataCoordinator(hass, config_entry, api)
+    except cloudflarespeedtest.SpeedTestException as err:
         raise ConfigEntryNotReady from err
 
     config_entry.runtime_data = coordinator
@@ -38,7 +38,7 @@ async def async_setup_entry(
         else:
             await coordinator.async_config_entry_first_refresh()
 
-    # Don't start a speedtest during startup
+    # Don't start a cloudflare speed test during startup
     async_at_started(hass, _async_finish_startup)
 
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
@@ -48,14 +48,14 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-    hass: HomeAssistant, config_entry: SpeedTestConfigEntry
+    hass: HomeAssistant, config_entry: CloudflareSpeedTestConfigEntry
 ) -> bool:
-    """Unload SpeedTest Entry from config_entry."""
+    """Unload CloudflareSpeedTest Entry from config_entry."""
     return await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
 
 async def update_listener(
-    hass: HomeAssistant, config_entry: SpeedTestConfigEntry
+    hass: HomeAssistant, config_entry: CloudflareSpeedTestConfigEntry
 ) -> None:
     """Handle options update."""
     await hass.config_entries.async_reload(config_entry.entry_id)
