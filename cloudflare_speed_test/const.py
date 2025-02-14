@@ -6,18 +6,11 @@ from typing import Final
 
 DOMAIN: Final = "cloudflare_speed_test"
 
-CONF_SERVER_NAME: Final = "server_name"
-CONF_SERVER_ID: Final = "server_id"
-
-ATTR_BYTES_RECEIVED: Final = "bytes_received"
-ATTR_BYTES_SENT: Final = "bytes_sent"
-ATTR_SERVER_COUNTRY: Final = "server_country"
-ATTR_SERVER_ID: Final = "server_id"
-ATTR_SERVER_NAME: Final = "server_name"
-
+ATTR_SERVER_REGION: Final = "server_region"
+ATTR_SERVER_CODE: Final = "server_code"
+ATTR_SERVER_CITY: Final = "server_city"
 
 DEFAULT_NAME: Final = "Cloudflare Speed Test"
 DEFAULT_SCAN_INTERVAL: Final = 60
-DEFAULT_SERVER: Final = "*Auto Detect"
 
 ATTRIBUTION: Final = "Data retrieved from Cloudflare Speed Test"

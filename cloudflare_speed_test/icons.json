@@ -1,13 +1,43 @@
 {
   "entity": {
     "sensor": {
-      "ping": {
+      "ip": {
+        "default": "mdi:ip-network"
+      },
+      "isp": {
+        "default": "mdi:web"
+      },
+      "latency": {
         "default": "mdi:speedometer"
       },
-      "download": {
+      "jitter": {
         "default": "mdi:speedometer"
       },
-      "upload": {
+      "100kB_down": {
+        "default": "mdi:speedometer"
+      },
+      "100kB_up": {
+        "default": "mdi:speedometer"
+      },
+      "1MB_down": {
+        "default": "mdi:speedometer"
+      },
+      "1MB_up": {
+        "default": "mdi:speedometer"
+      },
+      "10MB_down": {
+        "default": "mdi:speedometer"
+      },
+      "10MB_up": {
+        "default": "mdi:speedometer"
+      },
+      "25MB_down": {
+        "default": "mdi:speedometer"
+      },
+      "90th_percentile_down": {
+        "default": "mdi:speedometer"
+      },
+      "90th_percentile_up": {
         "default": "mdi:speedometer"
       }
     }

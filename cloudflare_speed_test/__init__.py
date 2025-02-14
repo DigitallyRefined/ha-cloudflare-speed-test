@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from functools import partial
 
-import speedtest as cloudflarespeedtest
+from cfspeedtest import CloudflareSpeedtest
 
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import Platform
@@ -21,13 +21,8 @@ async def async_setup_entry(
     hass: HomeAssistant, config_entry: CloudflareSpeedTestConfigEntry
 ) -> bool:
     """Set up the Cloudflare Speed Test component."""
-    try:
-        api = await hass.async_add_executor_job(
-            partial(cloudflarespeedtest.Speedtest, secure=True)
-        )
-        coordinator = CloudflareSpeedTestDataCoordinator(hass, config_entry, api)
-    except cloudflarespeedtest.SpeedTestException as err:
-        raise ConfigEntryNotReady from err
+    api = CloudflareSpeedtest
+    coordinator = CloudflareSpeedTestDataCoordinator(hass, config_entry, api)
 
     config_entry.runtime_data = coordinator
 

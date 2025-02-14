@@ -20,17 +20,14 @@ from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
-    ATTR_BYTES_RECEIVED,
-    ATTR_BYTES_SENT,
-    ATTR_SERVER_COUNTRY,
-    ATTR_SERVER_ID,
-    ATTR_SERVER_NAME,
+    ATTR_SERVER_REGION,
+    ATTR_SERVER_CODE,
+    ATTR_SERVER_CITY,
     ATTRIBUTION,
     DEFAULT_NAME,
     DOMAIN,
 )
 from .coordinator import CloudflareSpeedTestConfigEntry, CloudflareSpeedTestDataCoordinator
-
 
 @dataclass(frozen=True)
 class CloudflareSpeedTestSensorEntityDescription(SensorEntityDescription):
@@ -41,26 +38,109 @@ class CloudflareSpeedTestSensorEntityDescription(SensorEntityDescription):
 
 SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
     CloudflareSpeedTestSensorEntityDescription(
-        key="ping",
-        translation_key="ping",
-        name="Ping",
+        key="ip",
+        translation_key="ip",
+        name="IP Address",
+        value=lambda value: value,
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="isp",
+        translation_key="isp",
+        name="ISP",
+        value=lambda value: value,
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="latency",
+        translation_key="latency",
+        name="Latency",
         native_unit_of_measurement=UnitOfTime.MILLISECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DURATION,
     ),
     CloudflareSpeedTestSensorEntityDescription(
-        key="download",
-        translation_key="download",
-        name="Download",
+        key="jitter",
+        translation_key="jitter",
+        name="Jitter",
+        native_unit_of_measurement=UnitOfTime.MILLISECONDS,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DURATION,
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="100kB_down_bps",
+        translation_key="100kB_down",
+        name="100kB down",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
     ),
     CloudflareSpeedTestSensorEntityDescription(
-        key="upload",
-        translation_key="upload",
-        name="Upload",
+        key="100kB_up_bps",
+        translation_key="100kB_up",
+        name="100kB up",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="1MB_down_bps",
+        translation_key="1MB_down",
+        name="1MB down",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="1MB_up_bps",
+        translation_key="1MB_up",
+        name="1MB up",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="10MB_down_bps",
+        translation_key="10MB_down",
+        name="10MB down",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="10MB_up_bps",
+        translation_key="10MB_up",
+        name="10MB up",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="25MB_down_bps",
+        translation_key="25MB_down",
+        name="25MB down",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="90th_percentile_down_bps",
+        translation_key="90th_percentile_down",
+        name="90th percentile down",
+        native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DATA_RATE,
+        value=lambda value: round(value / 10**6, 2),
+    ),
+    CloudflareSpeedTestSensorEntityDescription(
+        key="90th_percentile_up_bps",
+        translation_key="90th_percentile_up",
+        name="90th percentile up",
         native_unit_of_measurement=UnitOfDataRate.MEGABITS_PER_SECOND,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
@@ -110,7 +190,8 @@ class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordin
     def native_value(self) -> StateType:
         """Return native value for entity."""
         if self.coordinator.data:
-            state = self.coordinator.data[self.entity_description.key]
+            location = "meta" if self.entity_description.key == "ip" else "tests"
+            state = self.coordinator.data[location][self.entity_description.key].value
             self._state = cast(StateType, self.entity_description.value(state))
         return self._state
 
@@ -120,17 +201,10 @@ class CloudflareSpeedTestSensor(CoordinatorEntity[CloudflareSpeedTestDataCoordin
         if self.coordinator.data:
             self._attrs.update(
                 {
-                    ATTR_SERVER_NAME: self.coordinator.data["server"]["name"],
-                    ATTR_SERVER_COUNTRY: self.coordinator.data["server"]["country"],
-                    ATTR_SERVER_ID: self.coordinator.data["server"]["id"],
+                    ATTR_SERVER_CITY: self.coordinator.data["meta"]["location_city"].value,
+                    ATTR_SERVER_REGION: self.coordinator.data["meta"]["location_region"].value,
+                    ATTR_SERVER_CODE: self.coordinator.data["meta"]["location_code"].value,
                 }
             )
-
-            if self.entity_description.key == "download":
-                self._attrs[ATTR_BYTES_RECEIVED] = self.coordinator.data[
-                    ATTR_BYTES_RECEIVED
-                ]
-            elif self.entity_description.key == "upload":
-                self._attrs[ATTR_BYTES_SENT] = self.coordinator.data[ATTR_BYTES_SENT]
 
         return self._attrs
