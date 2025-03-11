@@ -33,7 +33,7 @@ Or search for `Cloudflare Speed Test` in HACS or copy this GitHub URL and add it
 
 ### Manual  
 
-Download the `cloudflare_speed_test` directory and place in your `<config>/custom_component` folder.
+[Download the latest `cloudflare_speed_test.zip` release](https://github.com/DigitallyRefined/ha-cloudflare-speed-test/releases) and extract it into your `<config>/custom_component` folder.
 
 ### Setup
 
