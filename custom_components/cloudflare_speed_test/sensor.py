@@ -174,6 +174,7 @@ class CloudflareSpeedTestSensor(
     entity_description: CloudflareSpeedTestSensorEntityDescription
     _attr_attribution = ATTRIBUTION
     _attr_has_entity_name = True
+    _attr_force_update = True
 
     def __init__(
         self,
