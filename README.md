@@ -5,6 +5,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/custom-components/hacs)
 
 ![downloads](https://img.shields.io/github/downloads/DigitallyRefined/ha-cloudflare-speed-test/total.svg)
+![downloads](https://img.shields.io/github/downloads/DigitallyRefined/ha-cloudflare-speed-test/latest/total.svg)
 
 This integration uses the [cloudflarepycli](https://pypi.org/project/cloudflarepycli/) Python library to retrieve network performance statistics from [https://speed.cloudflare.com](https://speed.cloudflare.com) including:
 
