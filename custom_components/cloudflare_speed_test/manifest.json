@@ -7,7 +7,7 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/DigitallyRefined/ha-cloudflare-speed-test/issues",
   "requirements": [
-    "git+https://github.com/martinbrose/cloudflarepycli.git@c13517b9d9031c4ec1552a76c848e36ba2dd094f#egg=cloudflarepycli"
+    "cloudflarepycli@git+https://github.com/martinbrose/cloudflarepycli@c13517b9d9031c4ec1552a76c848e36ba2dd094f"
   ],
-  "version": "0.0.3-dev"
+  "version": "0.0.3-dev2"
 }
