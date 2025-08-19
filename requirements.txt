@@ -2,4 +2,4 @@ colorlog==6.9.0
 homeassistant==2025.3.0
 pip>=21.3.1
 ruff==0.12.9
-cloudflarepycli==2.0.2
+cloudflarepycli@git+https://github.com/DigitallyRefined/cloudflarepycli.git@v2.1.0-rc
