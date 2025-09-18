@@ -9,6 +9,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.start import async_at_started
 
+from .const import CONF_SPEED_TEST_INTERVAL, DEFAULT_SPEED_TEST_INTERVAL
 from .coordinator import (
     CloudflareSpeedTestConfigEntry,
     CloudflareSpeedTestDataCoordinator,
@@ -22,8 +23,14 @@ async def async_setup_entry(
 ) -> bool:
     """Set up the Cloudflare Speed Test component."""
     api = CloudflareSpeedtest
-    coordinator = CloudflareSpeedTestDataCoordinator(hass, config_entry, api)
 
+    speed_test_minutes = config_entry.options.get(
+        CONF_SPEED_TEST_INTERVAL
+    ) or config_entry.data.get(CONF_SPEED_TEST_INTERVAL, DEFAULT_SPEED_TEST_INTERVAL)
+
+    coordinator = CloudflareSpeedTestDataCoordinator(
+        hass, config_entry, api, speed_test_interval_minutes=speed_test_minutes
+    )
     config_entry.runtime_data = coordinator
 
     async def _async_finish_startup(hass: HomeAssistant) -> None:
