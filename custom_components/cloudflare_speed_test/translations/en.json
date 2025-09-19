@@ -1,4 +1,28 @@
 {
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cloudflare Speed Test Setup",
+        "data": {
+          "speed_test_interval": "Speed test run interval (minutes)"
+        }
+      },
+      "init": {
+        "data": {
+          "speed_test_interval": "Speed test run interval (minutes)"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "speed_test_interval": "Speed test run interval (minutes)"
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "ip": {
