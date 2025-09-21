@@ -43,13 +43,13 @@
         "name": "ISP",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -57,13 +57,13 @@
         "name": "Latency",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -71,13 +71,13 @@
         "name": "Jitter",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -85,13 +85,13 @@
         "name": "100kB down",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -99,13 +99,13 @@
         "name": "100kB up",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -113,13 +113,13 @@
         "name": "1MB down",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -127,13 +127,13 @@
         "name": "1MB up",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -141,13 +141,13 @@
         "name": "10MB down",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -155,13 +155,13 @@
         "name": "10MB up",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -169,13 +169,13 @@
         "name": "25MB down",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -183,13 +183,13 @@
         "name": "90th percentile down",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       },
@@ -197,13 +197,13 @@
         "name": "90th percentile up",
         "state_attributes": {
           "server_city": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_city::name%]"
+            "name": "Server city"
           },
           "server_region": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_region::name%]"
+            "name": "Server region"
           },
           "server_code": {
-            "name": "[%key:component::cloudflare_speed_test::entity::sensor::ip::state_attributes::server_code::name%]"
+            "name": "Server code"
           }
         }
       }
