@@ -17,5 +17,13 @@ DEFAULT_SPEED_TEST_INTERVAL: Final = 60
 
 # Options / config keys
 CONF_SPEED_TEST_INTERVAL: Final = "speed_test_interval"
+CONF_CONNECTION_TIMEOUT: Final = "connection_timeout"
+CONF_READ_TIMEOUT: Final = "read_timeout"
+
+# Timeout settings in seconds
+# Set high enough to support slow 1Mbps connections (25MB file = ~200s at 1Mbps)
+DEFAULT_CONNECTION_TIMEOUT: Final = 30
+DEFAULT_READ_TIMEOUT: Final = 300
+DEFAULT_TIMEOUT: Final = (DEFAULT_CONNECTION_TIMEOUT, DEFAULT_READ_TIMEOUT)
 
 ATTRIBUTION: Final = "Data retrieved from Cloudflare Speed Test"

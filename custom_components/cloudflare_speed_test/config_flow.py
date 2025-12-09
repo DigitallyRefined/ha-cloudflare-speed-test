@@ -9,7 +9,15 @@ from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 
-from .const import DOMAIN, DEFAULT_SPEED_TEST_INTERVAL, CONF_SPEED_TEST_INTERVAL
+from .const import (
+    CONF_CONNECTION_TIMEOUT,
+    CONF_READ_TIMEOUT,
+    CONF_SPEED_TEST_INTERVAL,
+    DEFAULT_CONNECTION_TIMEOUT,
+    DEFAULT_READ_TIMEOUT,
+    DEFAULT_SPEED_TEST_INTERVAL,
+    DOMAIN,
+)
 
 
 class CloudflareSpeedTestFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -20,17 +28,27 @@ class CloudflareSpeedTestFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
         if user_input is not None:
-            # Store the initial speed test interval in data (options can override later)
+            # Store the initial configuration in data (options can override later)
             return self.async_create_entry(
                 title="Cloudflare Speed Test",
-                data={CONF_SPEED_TEST_INTERVAL: user_input[CONF_SPEED_TEST_INTERVAL]},
+                data={
+                    CONF_SPEED_TEST_INTERVAL: user_input[CONF_SPEED_TEST_INTERVAL],
+                    CONF_CONNECTION_TIMEOUT: user_input[CONF_CONNECTION_TIMEOUT],
+                    CONF_READ_TIMEOUT: user_input[CONF_READ_TIMEOUT],
+                },
             )
 
         schema = vol.Schema(
             {
                 vol.Required(
                     CONF_SPEED_TEST_INTERVAL, default=DEFAULT_SPEED_TEST_INTERVAL
-                ): vol.All(cv.positive_int, vol.Range(min=1, max=1440)),
+                ): vol.All(cv.positive_int, vol.Range(min=10, max=1440)),
+                vol.Required(
+                    CONF_CONNECTION_TIMEOUT, default=DEFAULT_CONNECTION_TIMEOUT
+                ): vol.All(cv.positive_int, vol.Range(min=5, max=300)),
+                vol.Required(CONF_READ_TIMEOUT, default=DEFAULT_READ_TIMEOUT): vol.All(
+                    cv.positive_int, vol.Range(min=10, max=600)
+                ),
             }
         )
         return self.async_show_form(step_id="user", data_schema=schema)
@@ -54,16 +72,30 @@ class CloudflareSpeedTestOptionsFlowHandler(config_entries.OptionsFlowWithConfig
             return self.async_create_entry(title="", data=user_input)
 
         # Pre-fill from options → data → default
-        current = self.config_entry.options.get(
+        current_interval = self.config_entry.options.get(
             CONF_SPEED_TEST_INTERVAL
         ) or self.config_entry.data.get(
             CONF_SPEED_TEST_INTERVAL, DEFAULT_SPEED_TEST_INTERVAL
         )
+        current_connection_timeout = self.config_entry.options.get(
+            CONF_CONNECTION_TIMEOUT
+        ) or self.config_entry.data.get(
+            CONF_CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT
+        )
+        current_read_timeout = self.config_entry.options.get(
+            CONF_READ_TIMEOUT
+        ) or self.config_entry.data.get(CONF_READ_TIMEOUT, DEFAULT_READ_TIMEOUT)
 
         schema = vol.Schema(
             {
-                vol.Required(CONF_SPEED_TEST_INTERVAL, default=current): vol.All(
-                    cv.positive_int, vol.Range(min=1, max=1440)
+                vol.Required(
+                    CONF_SPEED_TEST_INTERVAL, default=current_interval
+                ): vol.All(cv.positive_int, vol.Range(min=10, max=1440)),
+                vol.Required(
+                    CONF_CONNECTION_TIMEOUT, default=current_connection_timeout
+                ): vol.All(cv.positive_int, vol.Range(min=5, max=300)),
+                vol.Required(CONF_READ_TIMEOUT, default=current_read_timeout): vol.All(
+                    cv.positive_int, vol.Range(min=10, max=600)
                 ),
             }
         )
