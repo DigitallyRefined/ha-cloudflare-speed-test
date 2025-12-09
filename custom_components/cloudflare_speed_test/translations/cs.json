@@ -1,0 +1,211 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cloudflare Speed Test Nastavení ",
+        "data": {
+          "speed_test_interval": "Interval spuštění testu rychlosti (minuty)",
+          "connection_timeout": "Časový limit připojení (sekundy)",
+          "read_timeout": "Časový limit čtení (sekundy)"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "speed_test_interval": "Interval spuštění testu rychlosti (minuty)",
+          "connection_timeout": "Časový limit připojení (sekundy)",
+          "read_timeout": "Časový limit čtení (sekundy)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "ip": {
+        "name": "IP adresa",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "isp": {
+        "name": "Poskytovatel internetu",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "latency": {
+        "name": "Latence",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "jitter": {
+        "name": "Jitter",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "100kb_down": {
+        "name": "100 kB stahování",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "100kb_up": {
+        "name": "100 kB odesílání",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "1mb_down": {
+        "name": "1 MB stahování",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "1mb_up": {
+        "name": "1 MB odesílání",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "10mb_down": {
+        "name": "10 MB stahování",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "10mb_up": {
+        "name": "10 MB odesílání",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "25mb_down": {
+        "name": "25 MB stahování",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "90th_percentile_down": {
+        "name": "90. percentil stahování",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      },
+      "90th_percentile_up": {
+        "name": "90. percentil odesílání",
+        "state_attributes": {
+          "server_city": {
+            "name": "Město serveru"
+          },
+          "server_region": {
+            "name": "Kraj serveru"
+          },
+          "server_code": {
+            "name": "Kód serveru"
+          }
+        }
+      }
+    }
+  }
+}
