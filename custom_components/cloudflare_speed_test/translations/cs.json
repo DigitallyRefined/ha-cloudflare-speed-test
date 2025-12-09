@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Cloudflare Speed Test Nastavení ",
+        "title": "Cloudflare Speed Test Nastavení",
         "data": {
           "speed_test_interval": "Interval spuštění testu rychlosti (minuty)",
           "connection_timeout": "Časový limit připojení (sekundy)",
