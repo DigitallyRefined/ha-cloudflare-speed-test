@@ -12,7 +12,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import DEFAULT_SPEED_TEST_INTERVAL, DOMAIN
+from .const import (
+    CONF_CONNECTION_TIMEOUT,
+    CONF_READ_TIMEOUT,
+    DEFAULT_CONNECTION_TIMEOUT,
+    DEFAULT_READ_TIMEOUT,
+    DEFAULT_SPEED_TEST_INTERVAL,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,7 +41,16 @@ class CloudflareSpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     ) -> None:
         """Initialize the data object."""
         self.hass = hass
-        self.api = api()
+
+        # Get timeout values from options → data → defaults
+        connection_timeout = config_entry.options.get(
+            CONF_CONNECTION_TIMEOUT
+        ) or config_entry.data.get(CONF_CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT)
+        read_timeout = config_entry.options.get(
+            CONF_READ_TIMEOUT
+        ) or config_entry.data.get(CONF_READ_TIMEOUT, DEFAULT_READ_TIMEOUT)
+
+        self.api = api(timeout=(connection_timeout, read_timeout))
 
         minutes = speed_test_interval_minutes or DEFAULT_SPEED_TEST_INTERVAL
 
