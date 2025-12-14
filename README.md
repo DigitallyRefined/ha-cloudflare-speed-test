@@ -55,9 +55,10 @@ To disable polling and create your own timed automation:
    * Then, select **System options** and toggle the button to disable polling.
 3. To define your custom polling interval, create an automation.
    1. Go to [**Settings** > **Automations & scenes**](https://my.home-assistant.io/redirect/automations) and create a new automation.
-   2. Define any triggers/conditions you like e.g. a time trigger.
-   3. Select **Add action**, then, select **Other actions**.
-   4. Select **Perform action**, and from the list, select the [`homeassistant.update_entity` action](https://www.home-assistant.io/integrations/homeassistant/#action-homeassistantupdate_entity) (note: only select one entity, the other entities will be automatically updated).
+   2. Define any triggers/conditions you like (e.g. a time trigger).
+   3. Select **Add action**, then, search/select **Perform action**.
+   4. Search/select the [`homeassistant.update_entity` action](https://www.home-assistant.io/integrations/homeassistant/#action-homeassistantupdate_entity).
+   5. Search/select the `cloudflare_speed_test_90th_percentile_down` entity (note: you only need to select one Cloudflare entity, the other entities will be automatically updated).
 4. Save the automation to automatically trigger based on your own schedule.
 
 ### Add to dashboard
