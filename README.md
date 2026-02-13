@@ -65,44 +65,46 @@ To disable polling and create your own timed automation:
 
 ![Graph screenshot](screenshot.webp)
 
-To add graphs to your dashboard, the following YAML can be used:
+To add graphs to your dashboard, the following YAML can be used in a manual card:
 
 <details>
 <summary>Expand for dashboard YAML</summary>
 
 ```yaml
-- chart_type: line
-  period: day
-  type: statistics-graph
-  entities:
-    - sensor.cloudflare_speed_test_90th_percentile_down
-    - sensor.cloudflare_speed_test_25mb_down
-    - sensor.cloudflare_speed_test_10mb_down
-    - sensor.cloudflare_speed_test_1mb_down
-    - sensor.cloudflare_speed_test_100kb_down
-  stat_types:
-    - max
-  title: Download speed
-- chart_type: line
-  period: day
-  type: statistics-graph
-  entities:
-    - sensor.cloudflare_speed_test_90th_percentile_up
-    - sensor.cloudflare_speed_test_10mb_up
-    - sensor.cloudflare_speed_test_1mb_up
-    - sensor.cloudflare_speed_test_100kb_up
-  stat_types:
-    - max
-  title: Upload speed
-- chart_type: line
-  period: day
-  type: statistics-graph
-  entities:
-    - sensor.cloudflare_speed_test_latency
-    - sensor.cloudflare_speed_test_jitter
-  stat_types:
-    - min
-  title: Ping
+type: vertical-stack
+cards:
+  - chart_type: line
+    period: day
+    type: statistics-graph
+    entities:
+      - sensor.cloudflare_speed_test_90th_percentile_down
+      - sensor.cloudflare_speed_test_25mb_down
+      - sensor.cloudflare_speed_test_10mb_down
+      - sensor.cloudflare_speed_test_1mb_down
+      - sensor.cloudflare_speed_test_100kb_down
+    stat_types:
+      - max
+    title: Download speed
+  - chart_type: line
+    period: day
+    type: statistics-graph
+    entities:
+      - sensor.cloudflare_speed_test_90th_percentile_up
+      - sensor.cloudflare_speed_test_10mb_up
+      - sensor.cloudflare_speed_test_1mb_up
+      - sensor.cloudflare_speed_test_100kb_up
+    stat_types:
+      - max
+    title: Upload speed
+  - chart_type: line
+    period: day
+    type: statistics-graph
+    entities:
+      - sensor.cloudflare_speed_test_latency
+      - sensor.cloudflare_speed_test_jitter
+    stat_types:
+      - min
+    title: Ping
 ```
 </details>
 
