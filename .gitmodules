@@ -1,0 +1,3 @@
+[submodule "cloudflarepycli"]
+	path = cloudflarepycli
+	url = git@github.com:DigitallyRefined/cloudflarepycli.git
