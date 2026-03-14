@@ -43,14 +43,15 @@ class CloudflareSpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.hass = hass
 
         # Get timeout values from options → data → defaults
-        connection_timeout = config_entry.options.get(
+        self._connection_timeout = config_entry.options.get(
             CONF_CONNECTION_TIMEOUT
         ) or config_entry.data.get(CONF_CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT)
-        read_timeout = config_entry.options.get(
+        self._read_timeout = config_entry.options.get(
             CONF_READ_TIMEOUT
         ) or config_entry.data.get(CONF_READ_TIMEOUT, DEFAULT_READ_TIMEOUT)
 
-        self.api = api(timeout=(connection_timeout, read_timeout))
+        self._api_cls = api
+        self.api: CloudflareSpeedtest | None = None
 
         minutes = speed_test_interval_minutes or DEFAULT_SPEED_TEST_INTERVAL
 
@@ -64,6 +65,10 @@ class CloudflareSpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     def update_data(self) -> dict[str, Any]:
         """Get the latest data from Cloudflare Speed Test."""
+        if self.api is None:
+            self.api = self._api_cls(
+                timeout=(self._connection_timeout, self._read_timeout)
+            )
         results = self.api.run_all()
         return cast(dict[str, Any], results)
 
