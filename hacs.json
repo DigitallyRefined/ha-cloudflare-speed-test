@@ -1,6 +1,6 @@
 {
   "name": "Cloudflare Speed Test",
-  "homeassistant": "2025.3.0",
+  "homeassistant": "2026.1.0",
   "zip_release": true,
   "filename": "cloudflare_speed_test.zip"
 }
