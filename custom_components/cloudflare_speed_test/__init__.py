@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from cfspeedtest import CloudflareSpeedtest
-
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant

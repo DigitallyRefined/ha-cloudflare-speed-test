@@ -20,9 +20,9 @@ from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
-    ATTR_SERVER_REGION,
-    ATTR_SERVER_CODE,
     ATTR_SERVER_CITY,
+    ATTR_SERVER_CODE,
+    ATTR_SERVER_REGION,
     ATTRIBUTION,
     DEFAULT_NAME,
     DOMAIN,
@@ -200,7 +200,7 @@ class CloudflareSpeedTestSensor(
             location = "meta" if self.entity_description.key == "ip" else "tests"
             location_dict = self.coordinator.data.get(location, {})
             value_obj = location_dict.get(self.entity_description.key, {})
-            state = getattr(value_obj, "value")
+            state = value_obj.value
             if state is not None:
                 self._state = cast(StateType, self.entity_description.value(state))
         return self._state
