@@ -1,5 +1,8 @@
 {
   "config": {
+    "abort": {
+      "already_configured": "Cloudflare Speed Test is already configured."
+    },
     "step": {
       "user": {
         "title": "Cloudflare Speed Test Setup",

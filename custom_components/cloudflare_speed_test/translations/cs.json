@@ -1,5 +1,8 @@
 {
   "config": {
+    "abort": {
+      "already_configured": "Cloudflare Speed Test je již nakonfigurován."
+    },
     "step": {
       "user": {
         "title": "Cloudflare Speed Test Nastavení",
