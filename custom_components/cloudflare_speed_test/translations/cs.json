@@ -1,14 +1,21 @@
 {
   "config": {
+    "abort": {
+      "already_configured": "Cloudflare Speed Test je již nakonfigurován."
+    },
     "step": {
       "user": {
         "title": "Cloudflare Speed Test Nastavení",
         "data": {
           "speed_test_interval": "Interval spuštění testu rychlosti (minuty)",
           "connection_timeout": "Časový limit připojení (sekundy)",
-          "read_timeout": "Časový limit čtení (sekundy)"
+          "read_timeout": "Časový limit čtení (sekundy)",
+          "tests": "Spouštěné testy"
         }
       }
+    },
+    "error": {
+      "select_at_least_one_test": "Vyberte alespoň jeden test."
     }
   },
   "options": {
@@ -17,8 +24,26 @@
         "data": {
           "speed_test_interval": "Interval spuštění testu rychlosti (minuty)",
           "connection_timeout": "Časový limit připojení (sekundy)",
-          "read_timeout": "Časový limit čtení (sekundy)"
+          "read_timeout": "Časový limit čtení (sekundy)",
+          "tests": "Spouštěné testy"
         }
+      }
+    },
+    "error": {
+      "select_at_least_one_test": "Vyberte alespoň jeden test."
+    }
+  },
+  "selector": {
+    "tests": {
+      "options": {
+        "latency": "Latence a jitter",
+        "download_100kb": "Stahování 100 kB",
+        "download_1mb": "Stahování 1 MB",
+        "download_10mb": "Stahování 10 MB",
+        "download_25mb": "Stahování 25 MB",
+        "upload_100kb": "Odesílání 100 kB",
+        "upload_1mb": "Odesílání 1 MB",
+        "upload_10mb": "Odesílání 10 MB"
       }
     }
   },

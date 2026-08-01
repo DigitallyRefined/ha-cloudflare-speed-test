@@ -26,6 +26,14 @@ from .const import (
     ATTRIBUTION,
     DEFAULT_NAME,
     DOMAIN,
+    TEST_DOWNLOAD_1MB,
+    TEST_DOWNLOAD_10MB,
+    TEST_DOWNLOAD_25MB,
+    TEST_DOWNLOAD_100KB,
+    TEST_LATENCY,
+    TEST_UPLOAD_1MB,
+    TEST_UPLOAD_10MB,
+    TEST_UPLOAD_100KB,
 )
 from .coordinator import (
     CloudflareSpeedTestConfigEntry,
@@ -38,6 +46,7 @@ class CloudflareSpeedTestSensorEntityDescription(SensorEntityDescription):
     """Class describing CloudflareSpeedTest sensor entities."""
 
     value: Callable = round
+    test_key: str | tuple[str, ...] | None = None
 
 
 SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
@@ -60,6 +69,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTime.MILLISECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DURATION,
+        test_key=TEST_LATENCY,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="jitter",
@@ -68,6 +78,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfTime.MILLISECONDS,
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DURATION,
+        test_key=TEST_LATENCY,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="100kB_down_bps",
@@ -77,6 +88,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_DOWNLOAD_100KB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="100kB_up_bps",
@@ -86,6 +98,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_UPLOAD_100KB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="1MB_down_bps",
@@ -95,6 +108,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_DOWNLOAD_1MB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="1MB_up_bps",
@@ -104,6 +118,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_UPLOAD_1MB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="10MB_down_bps",
@@ -113,6 +128,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_DOWNLOAD_10MB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="10MB_up_bps",
@@ -122,6 +138,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_UPLOAD_10MB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="25MB_down_bps",
@@ -131,6 +148,7 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=TEST_DOWNLOAD_25MB,
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="90th_percentile_down_bps",
@@ -140,6 +158,12 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=(
+            TEST_DOWNLOAD_100KB,
+            TEST_DOWNLOAD_1MB,
+            TEST_DOWNLOAD_10MB,
+            TEST_DOWNLOAD_25MB,
+        ),
     ),
     CloudflareSpeedTestSensorEntityDescription(
         key="90th_percentile_up_bps",
@@ -149,8 +173,26 @@ SENSOR_TYPES: tuple[CloudflareSpeedTestSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.DATA_RATE,
         value=lambda value: round(value / 10**6, 2),
+        test_key=(
+            TEST_UPLOAD_100KB,
+            TEST_UPLOAD_1MB,
+            TEST_UPLOAD_10MB,
+        ),
     ),
 )
+
+
+def _sensor_enabled(
+    description: CloudflareSpeedTestSensorEntityDescription,
+    enabled_tests: set[str],
+) -> bool:
+    """Return whether a sensor should be created for the enabled tests."""
+    test_keys = description.test_key
+    if test_keys is None:
+        return True
+    if isinstance(test_keys, str):
+        return test_keys in enabled_tests
+    return any(key in enabled_tests for key in test_keys)
 
 
 async def async_setup_entry(
@@ -160,9 +202,11 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Cloudflare_speed_test sensors."""
     cloudflarespeedtest_coordinator = config_entry.runtime_data
+    enabled_tests = set(cloudflarespeedtest_coordinator.enabled_tests)
     async_add_entities(
         CloudflareSpeedTestSensor(cloudflarespeedtest_coordinator, description)
         for description in SENSOR_TYPES
+        if _sensor_enabled(description, enabled_tests)
     )
 
 
@@ -199,8 +243,8 @@ class CloudflareSpeedTestSensor(
         if self.coordinator.data:
             location = "meta" if self.entity_description.key == "ip" else "tests"
             location_dict = self.coordinator.data.get(location, {})
-            value_obj = location_dict.get(self.entity_description.key, {})
-            state = value_obj.value
+            value_obj = location_dict.get(self.entity_description.key)
+            state = getattr(value_obj, "value", None)
             if state is not None:
                 self._state = cast(StateType, self.entity_description.value(state))
         return self._state

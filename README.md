@@ -46,6 +46,8 @@ Click **Add integration** and search for `Cloudflare Speed Test`
 
 By default, a speed test will be run every hour or you can set a custom interval.
 
+The integration options let you also choose which individual tests to run (all are enabled by default). You can, for example, run only the latency/jitter tests, only the download tests, or keep the payload sizes small to use less data. To change the tests, open the integration's **Options** and select the tests you want to run.
+
 If you want to select an exact time when the speed test should run (e.g. to be more specific such as once a day over night) you can disable the default polling interval and create your own timed automation.
 
 To disable polling and create your own timed automation:

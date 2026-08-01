@@ -1,14 +1,21 @@
 {
   "config": {
+    "abort": {
+      "already_configured": "Cloudflare Speed Test is already configured."
+    },
     "step": {
       "user": {
         "title": "Cloudflare Speed Test Setup",
         "data": {
           "speed_test_interval": "Speed test run interval (minutes)",
           "connection_timeout": "Connection timeout (seconds)",
-          "read_timeout": "Read timeout (seconds)"
+          "read_timeout": "Read timeout (seconds)",
+          "tests": "Tests to run"
         }
       }
+    },
+    "error": {
+      "select_at_least_one_test": "Select at least one test."
     }
   },
   "options": {
@@ -17,8 +24,26 @@
         "data": {
           "speed_test_interval": "Speed test run interval (minutes)",
           "connection_timeout": "Connection timeout (seconds)",
-          "read_timeout": "Read timeout (seconds)"
+          "read_timeout": "Read timeout (seconds)",
+          "tests": "Tests to run"
         }
+      }
+    },
+    "error": {
+      "select_at_least_one_test": "Select at least one test."
+    }
+  },
+  "selector": {
+    "tests": {
+      "options": {
+        "latency": "Latency & jitter",
+        "download_100kb": "Download 100 kB",
+        "download_1mb": "Download 1 MB",
+        "download_10mb": "Download 10 MB",
+        "download_25mb": "Download 25 MB",
+        "upload_100kb": "Upload 100 kB",
+        "upload_1mb": "Upload 1 MB",
+        "upload_10mb": "Upload 10 MB"
       }
     }
   },
