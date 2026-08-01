@@ -8,7 +8,12 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.start import async_at_started
 
-from .const import CONF_SPEED_TEST_INTERVAL, DEFAULT_SPEED_TEST_INTERVAL
+from .const import (
+    CONF_SPEED_TEST_INTERVAL,
+    CONF_TESTS,
+    DEFAULT_SPEED_TEST_INTERVAL,
+    DEFAULT_TESTS,
+)
 from .coordinator import (
     CloudflareSpeedTestConfigEntry,
     CloudflareSpeedTestDataCoordinator,
@@ -53,6 +58,20 @@ async def async_unload_entry(
 ) -> bool:
     """Unload CloudflareSpeedTest Entry from config_entry."""
     return await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
+
+
+async def async_migrate_entry(
+    hass: HomeAssistant, config_entry: CloudflareSpeedTestConfigEntry
+) -> bool:
+    """Migrate old config entry to a new format."""
+    if config_entry.version > 1:
+        return False
+
+    new_data = {**config_entry.data}
+    new_data[CONF_TESTS] = list(DEFAULT_TESTS)
+    hass.config_entries.async_update_entry(config_entry, data=new_data, version=2)
+
+    return True
 
 
 async def update_listener(
