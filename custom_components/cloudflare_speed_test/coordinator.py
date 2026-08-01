@@ -58,6 +58,11 @@ class CloudflareSpeedTestDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     config_entry: CloudflareSpeedTestConfigEntry
 
+    @property
+    def enabled_tests(self) -> list[str] | tuple[str, ...]:
+        """Return the tests enabled for this config entry."""
+        return self._enabled_tests
+
     def __init__(
         self,
         hass: HomeAssistant,
